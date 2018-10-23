@@ -1,4 +1,14 @@
 ---
+- name: generate a random password
+  set_fact: 
+    passwd: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+
+- name: hash passwd
+  set_fact:
+    user_passwd: "{{ passwd | password_hash('sha512') }}"
+
+- debug:
+    var: passwd
 
 - name: Adding primary group
   group:
