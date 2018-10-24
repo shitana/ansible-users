@@ -7,8 +7,12 @@
   set_fact:
     user_passwd: "{{ passwd | password_hash('sha512') }}"
 
-- debug:
-    var: passwd
+- name: Save passwd in local_file
+  shell: echo "{{ inventory_hostname }} {{ users.0.username }} {{ passwd }}"  >> ./.password_file
+  delegate_to: localhost
+
+#- debug:
+#    var: passwd
 
 - name: Adding primary group
   group:
