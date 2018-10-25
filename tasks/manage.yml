@@ -8,9 +8,9 @@
     user_passwd: "{{ passwd | password_hash('sha512') }}"
 
 - name: Save passwd in local_file
-  shell: echo "{{ inventory_hostname }} {{ users.0.username }} {{ passwd }}"  >> ./.password_file
+  shell: echo "{{ inventory_hostname }} {{ users.0.username }} {{ passwd }}"  >> ./.password_file.{{ ansible_facts.date_time.iso8601_basic_short }}
   delegate_to: localhost
-  when: users.0.update_password == "always"
+#  when: users.0.update_password == "always"
 
 - name: Adding primary group
   group:
