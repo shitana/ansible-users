@@ -11,9 +11,6 @@
   shell: echo "{{ inventory_hostname }} {{ users.0.username }} {{ passwd }}"  >> ./.password_file
   delegate_to: localhost
 
-#- debug:
-#    var: passwd
-
 - name: Adding primary group
   group:
     name: "{{ users_group }}"
