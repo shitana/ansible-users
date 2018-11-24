@@ -1,7 +1,7 @@
 ---
 - name: generate a random password
   set_fact: 
-    passwd: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+    passwd: "{{ lookup('password', '/dev/null length=8 chars=ascii_letters') }}"
 
 - name: hash passwd
   set_fact:
@@ -10,7 +10,7 @@
 - name: Save passwd in local_file
   shell: echo "{{ inventory_hostname }} {{ users.0.username }} {{ passwd }}"  >> ./.password_file.{{ ansible_facts.date_time.iso8601_basic_short }}
   delegate_to: localhost
-#  when: users.0.update_password == "always"
+  when: update_pwd_option is defined and update_pwd_option == "always"
 
 - name: Adding primary group
   group:
